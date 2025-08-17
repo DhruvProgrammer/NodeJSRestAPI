@@ -1,0 +1,27 @@
+[
+    {
+        "name": "iphone",
+        "price": 154,
+        "featured": true,
+        "company": "apple"
+    },
+    {
+        "name":"iphone10",
+        "price":1540,
+        "featured":true,
+        "company":"apple"
+
+    },
+    {
+        "name":"iphone12",
+        "price":15400,
+        "featured":true,
+        "company":"apple"
+    },
+    {
+        "name":"note 8 pro",
+        "price":15400,
+        "featured":true,
+        "company":"mi"
+    }
+]
