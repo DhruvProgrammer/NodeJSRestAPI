@@ -1,28 +1,39 @@
 require("dotenv").config();
 
 const express = require("express");
+const connectDB = require("./db/connect");
+
+const {
+  getAllProducts,
+  getAllProductsTesting,
+  createProduct,
+  readProduct,
+  updateProduct,
+  deleteProduct,
+} = require("./control/products");
+
 const app = express();
-const connectDB=require("./db/connect")
+app.use(express.json());
 
-const PORT= process.env.PORT || 5000;
+// Routes
+app.get("/api/products", getAllProducts);              // get all with filters
+app.get("/api/products/testing", getAllProductsTesting); // testing route
+app.post("/api/products", createProduct);              // create
+app.get("/api/products/:id", readProduct);             // read one
+app.put("/api/products/:id", updateProduct);           // update
+app.delete("/api/products/:id", deleteProduct);        // delete
 
-const products_routes= require("./routes/prodcuts")
+const PORT = process.env.PORT || 5000;
 
-app.get("/",(req,res)=>{
-    res.send("i m alive");
-    
-});
-app.use("/api/products",products_routes)
 const start = async () => {
-    try{
-        await connectDB(process.env.MONGODB_URL);
-        app.listen(PORT,()=>{
-            console.log(`${PORT}yes im connected`);
-        })
-    }
-    catch(error){
-        console.log(error);
-        }
-}
+  try {
+    await connectDB(process.env.MONGODB_URL);
+    app.listen(PORT, () => {
+      console.log(`Server is running on port ${PORT}`);
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 start();
