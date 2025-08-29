@@ -2,6 +2,8 @@ require("dotenv").config();
 
 const express = require("express");
 const connectDB = require("./db/connect");
+const Fuse=require("fuse.js")
+const products = require("./products.json");
 
 const {
   getAllProducts,
@@ -36,4 +38,17 @@ const start = async () => {
   }
 };
 
+const fuse=new Fuse(products,{
+  keys:["name","compnay"],
+  threshold: 0.3
+});
+
+app.get("/search",(req,res) => {
+  const query=req.query.q;
+  if(!query){
+    return res.status(400).json({error: "provide a serch  query"})
+  } 
+const result =fuse.search(query);
+res.json(result.map(r=>r.item))
+});
 start();
